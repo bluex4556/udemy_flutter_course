@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import './question_text.dart';
-import './answer_text.dart';
+import './quiz.dart';
+import 'complete.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget{
-    @override
+class MyApp extends StatefulWidget {
+  @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return MyAppState();
@@ -15,47 +15,55 @@ class MyApp extends StatefulWidget{
 
 class MyAppState extends State<MyApp> {
   var questionIndex = 0;
-
+  var proceed = true;
   @override
   Widget build(BuildContext context) {
-    var questions = ["Question 1", "Question 2"];
+    var questions = [
+      {
+        "question": "Question 1",
+        "answers": [
+          {"text":"correct" , "correct" : true},
+          {"text":"incorrect" , "correct" : false},
+        ]
+      },
+      {
+        "question": "Question 2",
+        "answers": [
+          {"text":"true" , "correct" : true},
+          {"text":"false" , "correct" : false},
+        ]
+      },
+    ];
 
-    void correctAnswer(){
+    void correctAnswer() {
       setState(() {
-        if(questionIndex<1)
-          questionIndex +=1;
+        proceed = true;
+        questionIndex += 1;
       });
     }
 
-    void wrongAnswer(){
-      print("wrong");
+    void wrongAnswer() {
+      setState(() {
+        proceed = false;
+      });
     }
 
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.grey[400],
         appBar: AppBar(
-          title: Text('Hello'),
+          title: Center(child: Text('Quiz App')),
           backgroundColor: Colors.red,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(child: QuestionText(questions[questionIndex])),
-            RaisedButton(
-              child: AnswerText('Answer 1'),
-              onPressed: correctAnswer,
-            ),
-            RaisedButton(
-              child: AnswerText('Answer 2'),
-              onPressed: wrongAnswer,
-            ),
-            RaisedButton(
-              child: AnswerText('Answer 3'),
-              onPressed: wrongAnswer,
-            ),
-          ],
-        ),
+        body: questionIndex < questions.length
+            ? Quiz(
+                correctAnswerHandler: correctAnswer,
+                incorrectAnswerHandler: wrongAnswer,
+                questionIndex: questionIndex,
+                questions: questions,
+                proceed: proceed,
+              )
+            : CompleteQuiz(),
       ),
     );
   }

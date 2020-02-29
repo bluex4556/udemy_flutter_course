@@ -12,9 +12,10 @@ class QuestionText extends StatelessWidget {
         questionText,
         style: TextStyle(
           fontSize: 22,
+          fontWeight: FontWeight.w500,
         ),
       ),
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.fromLTRB(0, 40, 0, 10),
     );
   }
 }

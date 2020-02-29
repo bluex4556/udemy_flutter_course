@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 
 class AnswerText extends StatelessWidget {
   final String answerText;
+  final Function clickHandler;
 
-  AnswerText(this.answerText);
+  AnswerText(this.answerText, this.clickHandler);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        answerText,
-        style: TextStyle(
-          fontSize: 22,
+      width: double.infinity,
+      child: RaisedButton(
+        child: Text(
+          answerText,
+          style: TextStyle(
+            fontSize: 22,
+          ),
         ),
+        onPressed: clickHandler,
       ),
-      margin: EdgeInsets.fromLTRB(1, 5, 10, 5),
+      margin: EdgeInsets.all(5),
     );
   }
 }
