@@ -48,6 +48,12 @@ class MyAppState extends State<MyApp> {
       });
     }
 
+    void restartQuiz(){
+      setState(() {
+        questionIndex = 0;
+      });
+    }
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey[400],
@@ -63,7 +69,7 @@ class MyAppState extends State<MyApp> {
                 questions: questions,
                 proceed: proceed,
               )
-            : CompleteQuiz(),
+            : CompleteQuiz(restartQuiz),
       ),
     );
   }
