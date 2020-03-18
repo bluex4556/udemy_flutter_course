@@ -34,6 +34,7 @@ class _UserTransactionsState extends State<UserTransactions> {
     return Column(
       children: <Widget>[
         TransactionList(transactions),
+        Padding(padding: EdgeInsets.all(20),),
         AddTransaction(addTransaction),
       ],
     );
