@@ -40,9 +40,14 @@ class MyHomePage extends StatelessWidget {
         title: Text("Personal Expenses"),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Card(
-            child: Text("hello"),
+          Container(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: Card(
+              child: Text("Graph"),
+            ),
           ),
           TransactionList(transactions),
         ],

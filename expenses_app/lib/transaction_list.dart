@@ -1,6 +1,7 @@
-import 'package:expensesapp/transactions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import './transactions.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transactions> transactions;
@@ -15,7 +16,6 @@ class TransactionList extends StatelessWidget {
           margin: EdgeInsets.all(5),
           elevation: 5,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Container(
                 child: Text(
@@ -25,8 +25,8 @@ class TransactionList extends StatelessWidget {
                       color: Colors.redAccent,
                       fontStyle: FontStyle.italic),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
                     border: Border.all(
                   width: 2,
@@ -38,29 +38,31 @@ class TransactionList extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "${tx.item}",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 3),
                   ),
                   Text(
-                    "${tx.purchaseDate}",
+                    DateFormat.yMMMd().format(tx.purchaseDate),
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
+              Padding(padding: EdgeInsets.symmetric(vertical: 0,horizontal: 50),),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 decoration: BoxDecoration(
                   border: Border(left: BorderSide(width: 2,color: Colors.grey)),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text("To"),
                     Text("${tx.shopName}", style: TextStyle(fontSize: 18),),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );
