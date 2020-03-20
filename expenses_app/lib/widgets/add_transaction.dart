@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class AddTransaction extends StatelessWidget {
+class AddTransaction extends StatefulWidget {
 
   final Function addTransactionHandler;
 
-  final nameController = new TextEditingController();
-  final priceController = new TextEditingController();
-  final shopNameController = new TextEditingController();
 
   AddTransaction(this.addTransactionHandler);
+
+  @override
+  _AddTransactionState createState() => _AddTransactionState();
+}
+
+class _AddTransactionState extends State<AddTransaction> {
+  final nameController = new TextEditingController();
+
+  final priceController = new TextEditingController();
+
+  final shopNameController = new TextEditingController();
+
+  void submitTransaction()
+  {
+    final name = nameController.text;
+    final price = priceController.text;
+    final shopName = shopNameController.text;
+    if(name.isEmpty || price.isEmpty || shopName.isEmpty)
+      return;
+    else {
+      widget.addTransactionHandler(name, price, shopName);
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +39,23 @@ class AddTransaction extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
+            autofocus: true,
             decoration: InputDecoration(
               labelText: "Name",
             ),
             controller: nameController,
+            onSubmitted: (_)=>submitTransaction(),
           ),
           TextField(
             decoration: InputDecoration(
               labelText: "Price",
             ),
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: false,
+              signed: false,
+            ),
+            onSubmitted: (_)=>submitTransaction(),
+            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
             controller: priceController,
           ),
           TextField(
@@ -33,12 +63,13 @@ class AddTransaction extends StatelessWidget {
               labelText: "Shop Name",
             ),
             controller: shopNameController,
+            onSubmitted: (_)=>submitTransaction(),
           ),
           MaterialButton(
             color: Colors.blue,
             child: Text("Add Item"),
             textColor: Colors.white,
-            onPressed: ()=>addTransactionHandler(nameController.text, priceController.text, shopNameController.text),
+            onPressed: submitTransaction,
           )
         ],
       ),

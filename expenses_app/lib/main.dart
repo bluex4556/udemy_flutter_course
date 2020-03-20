@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './widgets/user_transactions.dart';
-
+import 'models/transactions.dart';
+import 'widgets/transaction_list.dart';
+import 'widgets/add_transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +19,37 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  final List<Transactions> transactions = [
+//    Transactions(
+//        item: "Chips",
+//        amount: 10,
+//        purchaseDate: DateTime.now(),
+//        shopName: "Vmart"),
+  ];
+
+  void addTransaction(String name, String price, String shopName) {
+    setState(() {
+      transactions.add(new Transactions(
+        item: name,
+        amount: int.parse(price),
+        purchaseDate: DateTime.now(),
+        shopName: shopName,
+      ));
+    });
+  }
+
+  void startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(context: ctx, builder: (_){
+      return AddTransaction(addTransaction);
+    },);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +69,17 @@ class MyHomePage extends StatelessWidget {
                   child: Text("Graph"),
                 ),
               ),
-              Padding(padding: EdgeInsets.all(20),),
-              UserTransactions(),
+              Padding(
+                padding: EdgeInsets.all(20),
+              ),
+              TransactionList(transactions),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => startAddNewTransaction(context),
       ),
     );
   }
