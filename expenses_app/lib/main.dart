@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/transactions.dart';
 import 'widgets/transaction_list.dart';
 import 'widgets/add_transaction.dart';
+import 'widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,11 +28,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final List<Transactions> transactions = [
-//    Transactions(
-//        item: "Chips",
-//        amount: 10,
-//        purchaseDate: DateTime.now(),
-//        shopName: "Vmart"),
+    Transactions(
+        item: "Chips",
+        amount: 10,
+        purchaseDate: DateTime.now(),
+        shopName: "Vmart"),
   ];
 
   void addTransaction(String name, String price, String shopName) {
@@ -44,7 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
     });
   }
-
+  List<Transactions> get lastWeekTransaction{
+    return transactions.where((item){
+      return item.purchaseDate.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
   void startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(context: ctx, builder: (_){
       return AddTransaction(addTransaction);
@@ -63,15 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Card(
-                  child: Text("Graph"),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-              ),
+              Chart(lastWeekTransaction),
+              Padding(padding: EdgeInsets.all(20)),
               TransactionList(transactions),
             ],
           ),
