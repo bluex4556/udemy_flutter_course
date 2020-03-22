@@ -47,7 +47,9 @@ class Chart extends StatelessWidget{
             weekTransaction.reversed.map(
                   (tx){
                     double fractionOfTotal = (totalAmount == 0)? 0.0 : (tx["amount"] as int) / totalAmount;
-              return ChartBar(tx["day"], tx["amount"] , fractionOfTotal);
+              return Flexible(
+                  fit: FlexFit.tight,
+                  child: ChartBar(tx["day"], tx["amount"] , fractionOfTotal));
             }).toList(),
 
         ),

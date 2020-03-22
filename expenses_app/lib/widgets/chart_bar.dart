@@ -14,7 +14,8 @@ class ChartBar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(amount.toString()),
+          FittedBox(
+              child: Text(amount.toString())),
           SizedBox(height: 6),
           Container(
             height: 80,
@@ -31,7 +32,7 @@ class ChartBar extends StatelessWidget {
                   ),
                 ),
                 FractionallySizedBox(
-                  heightFactor: 0.5,
+                  heightFactor: fractionOfTotal,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.lightGreen,
