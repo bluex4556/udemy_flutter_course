@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class AddTransaction extends StatefulWidget {
 
@@ -19,6 +20,8 @@ class _AddTransactionState extends State<AddTransaction> {
 
   final shopNameController = new TextEditingController();
 
+  DateTime _selectedDate;
+
   void submitTransaction()
   {
     final name = nameController.text;
@@ -27,9 +30,24 @@ class _AddTransactionState extends State<AddTransaction> {
     if(name.isEmpty || price.isEmpty || shopName.isEmpty)
       return;
     else {
-      widget.addTransactionHandler(name, price, shopName);
+      final chosenDate = _selectedDate;
+      widget.addTransactionHandler(name, price, shopName, chosenDate);
       Navigator.pop(context);
     }
+  }
+
+  void _presentDatePicker()
+  {
+    showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2010), lastDate: DateTime.now()).then(
+        (pickedDate){
+          if(pickedDate == null)
+              return;
+          else
+            setState(() {
+              _selectedDate = pickedDate;
+            });
+        }
+    );
   }
 
   @override
@@ -65,7 +83,22 @@ class _AddTransactionState extends State<AddTransaction> {
             controller: shopNameController,
             onSubmitted: (_)=>submitTransaction(),
           ),
-
+          Container(
+//            width: 10,
+            padding: EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text( _selectedDate == null? "No date Chosen": DateFormat.yMd().format(_selectedDate)),
+                FlatButton(
+                  onPressed: _presentDatePicker,
+                  child: Text(_selectedDate == null? "Choose Date": "Change Date",
+                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold  ),),
+                  textColor: Theme.of(context).accentColor,
+                )
+              ],
+            ),
+          ),
           MaterialButton(
             color: Theme.of(context).accentColor,
             child: Text("Add Item"),

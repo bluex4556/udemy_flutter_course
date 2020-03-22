@@ -42,12 +42,14 @@ class _MyHomePageState extends State<MyHomePage> {
         shopName: "Vmart"),
   ];
 
-  void addTransaction(String name, String price, String shopName) {
+  void addTransaction(String name, String price, String shopName, DateTime chosenDate) {
+    if(chosenDate == null)
+        chosenDate = DateTime.now();
     setState(() {
       transactions.add(new Transactions(
         item: name,
         amount: int.parse(price),
-        purchaseDate: DateTime.now(),
+        purchaseDate: chosenDate,
         shopName: shopName,
       ));
     });
