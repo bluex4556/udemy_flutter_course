@@ -42,6 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
         shopName: "Vmart"),
   ];
 
+  void deleteTransaction(int id)
+  {
+    setState(() {
+      transactions.removeAt(id);
+    });
+  }
+
   void addTransaction(String name, String price, String shopName, DateTime chosenDate) {
     if(chosenDate == null)
         chosenDate = DateTime.now();
@@ -85,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Chart(lastWeekTransaction),
               Padding(padding: EdgeInsets.all(20)),
-              TransactionList(transactions),
+              TransactionList(transactions,deleteTransaction),
             ],
           ),
         ),
