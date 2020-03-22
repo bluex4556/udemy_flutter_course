@@ -13,8 +13,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.deepPurple,
+          accentColor: Colors.deepPurpleAccent,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+                  fontSize: 20,
+                ),
+                button: TextStyle(
+                  color: Colors.white,
+                ),
+              )),
       home: MyHomePage(),
     );
   }
@@ -26,7 +34,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final List<Transactions> transactions = [
     Transactions(
         item: "Chips",
@@ -45,15 +52,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
     });
   }
-  List<Transactions> get lastWeekTransaction{
-    return transactions.where((item){
-      return item.purchaseDate.isAfter(DateTime.now().subtract(Duration(days: 7)));
+
+  List<Transactions> get lastWeekTransaction {
+    return transactions.where((item) {
+      return item.purchaseDate
+          .isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
   }
+
   void startAddNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(context: ctx, builder: (_){
-      return AddTransaction(addTransaction);
-    },);
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return AddTransaction(addTransaction);
+      },
+    );
   }
 
   @override
@@ -76,7 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).textTheme.button.color,
+        ),
         onPressed: () => startAddNewTransaction(context),
       ),
     );

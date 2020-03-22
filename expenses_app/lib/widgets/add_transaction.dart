@@ -65,10 +65,11 @@ class _AddTransactionState extends State<AddTransaction> {
             controller: shopNameController,
             onSubmitted: (_)=>submitTransaction(),
           ),
+
           MaterialButton(
-            color: Colors.blue,
+            color: Theme.of(context).accentColor,
             child: Text("Add Item"),
-            textColor: Colors.white,
+            textColor: Theme.of(context).textTheme.button.color,
             onPressed: submitTransaction,
           )
         ],
