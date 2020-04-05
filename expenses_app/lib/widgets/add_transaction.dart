@@ -52,60 +52,64 @@ class _AddTransactionState extends State<AddTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(
-              labelText: "Name",
-            ),
-            controller: nameController,
-            onSubmitted: (_)=>submitTransaction(),
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom +30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: "Name",
+                ),
+                controller: nameController,
+                onSubmitted: (_)=>submitTransaction(),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Price",
+                ),
+                keyboardType: TextInputType.numberWithOptions(
+                  decimal: false,
+                  signed: false,
+                ),
+                onSubmitted: (_)=>submitTransaction(),
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                controller: priceController,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Shop Name",
+                ),
+                controller: shopNameController,
+                onSubmitted: (_)=>submitTransaction(),
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text( _selectedDate == null? "No date Chosen": DateFormat.yMd().format(_selectedDate)),
+                    FlatButton(
+                      onPressed: _presentDatePicker,
+                      child: Text(_selectedDate == null? "Choose Date": "Change Date",
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold  ),),
+                      textColor: Theme.of(context).accentColor,
+                    )
+                  ],
+                ),
+              ),
+              MaterialButton(
+                color: Theme.of(context).accentColor,
+                child: Text("Add Item"),
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: submitTransaction,
+              ),
+            ],
           ),
-          TextField(
-            decoration: InputDecoration(
-              labelText: "Price",
-            ),
-            keyboardType: TextInputType.numberWithOptions(
-              decimal: false,
-              signed: false,
-            ),
-            onSubmitted: (_)=>submitTransaction(),
-            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-            controller: priceController,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              labelText: "Shop Name",
-            ),
-            controller: shopNameController,
-            onSubmitted: (_)=>submitTransaction(),
-          ),
-          Container(
-//            width: 10,
-            padding: EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text( _selectedDate == null? "No date Chosen": DateFormat.yMd().format(_selectedDate)),
-                FlatButton(
-                  onPressed: _presentDatePicker,
-                  child: Text(_selectedDate == null? "Choose Date": "Change Date",
-                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold  ),),
-                  textColor: Theme.of(context).accentColor,
-                )
-              ],
-            ),
-          ),
-          MaterialButton(
-            color: Theme.of(context).accentColor,
-            child: Text("Add Item"),
-            textColor: Theme.of(context).textTheme.button.color,
-            onPressed: submitTransaction,
-          )
-        ],
+        ),
       ),
     );
   }

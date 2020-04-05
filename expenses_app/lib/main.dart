@@ -42,16 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
         shopName: "Vmart"),
   ];
 
-  void deleteTransaction(int id)
-  {
+  void deleteTransaction(int id) {
     setState(() {
       transactions.removeAt(id);
     });
   }
 
-  void addTransaction(String name, String price, String shopName, DateTime chosenDate) {
-    if(chosenDate == null)
-        chosenDate = DateTime.now();
+  void addTransaction(
+      String name, String price, String shopName, DateTime chosenDate) {
+    if (chosenDate == null) chosenDate = DateTime.now();
     setState(() {
       transactions.add(new Transactions(
         item: name,
@@ -80,19 +79,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final appBarVar = AppBar(
+      title: Text("Personal Expenses"),
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Personal Expenses"),
-      ),
+      appBar: appBarVar,
       body: Container(
         height: double.infinity,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Chart(lastWeekTransaction),
-              Padding(padding: EdgeInsets.all(20)),
-              TransactionList(transactions,deleteTransaction),
+              Container(
+                height: (mediaQuery.size.height - appBarVar.preferredSize.height - MediaQuery.of(context).padding.top ) * 0.3,
+                child: Chart(lastWeekTransaction),
+              ),
+              Container(
+                height: (mediaQuery.size.height - appBarVar.preferredSize.height - MediaQuery.of(context).padding.top ) * 0.05,
+              ),
+              Container(
+                  height: (mediaQuery.size.height - appBarVar.preferredSize.height - MediaQuery.of(context).padding.top ) * 0.65,
+                  child: TransactionList(transactions, deleteTransaction)),
             ],
           ),
         ),
