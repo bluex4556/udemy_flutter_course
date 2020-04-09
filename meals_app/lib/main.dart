@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mealsapp/screens/categories_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,14 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Meals App"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Started meals'),
-          ],
-        ),
-      ),
+      body: CategoriesScreen()
     );
   }
 }
