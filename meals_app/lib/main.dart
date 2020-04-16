@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.blueAccent,
         canvasColor: Colors.white30,
         textTheme: ThemeData.light().textTheme.copyWith(
-          body1: TextStyle(color: Colors.white, fontSize: 18),
+          body1: TextStyle(color: Colors.black, fontSize: 18),
           body2: TextStyle(color: Colors.black, fontSize: 20),
         )
       ),
       home: CategoriesScreen(),
       routes: {
-        '/categories-meals': (_)=>CategoryMealsScreen(),
+        CategoryMealsScreen.routeName: (_)=>CategoryMealsScreen(),
       },
     );
   }
