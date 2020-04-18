@@ -6,9 +6,7 @@ import 'package:mealsapp/dummy_data.dart';
 class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Deli Meals")),
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.all(15.0),
         child: GridView(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -24,7 +22,6 @@ class CategoriesScreen extends StatelessWidget {
                 categoryColor: category.color,
               );
             }).toList()),
-      ),
-    );
+      );
   }
 }
